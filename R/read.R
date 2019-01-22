@@ -11,8 +11,8 @@ library(tidytext)
 devtools::install_github('charlie86/spotifyr')
 library(spotifyr)
 
-Sys.setenv(SPOTIFY_CLIENT_ID = 'ID')
-Sys.setenv(SPOTIFY_CLIENT_SECRET = 'SECRET')
+Sys.setenv(SPOTIFY_CLIENT_ID = "ID")
+Sys.setenv(SPOTIFY_CLIENT_SECRET = "Secret")
 access_token <- get_spotify_access_token()
 
 albums <- get_artist_albums(artist = "Cardi B")
@@ -29,13 +29,7 @@ lyrics <- albums$album_name %>%
     set_names(albums$album_name) %>%
     bind_rows(.id = "album")
 
-
-# tidy
-
-lyrics %>%
-    tolower() %>%
-    removePunctuation()
-
-# tomorrow: need to unnnest lyrics column but keep albumns, export to csv
+# save data
+devtools::use_data(albums, features, lyrics, tracks, internal = TRUE)
 
 
